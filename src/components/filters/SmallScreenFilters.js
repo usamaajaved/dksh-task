@@ -21,11 +21,9 @@ const SM_Filters = ({ open, onClose = () => {} }) => {
   const [price, setPrice] = useState({ view: false, value: [0, 10000] });
   const [service, setService] = useState({ view: false, value: "All" });
   const [rating, setRating] = useState({ view: false, value: "Rating" });
-
+  const handleChange = (e, v) => setPrice((e) => ({ ...e, value: v }));
+  const { value } = price;
   const PriceDropdown = () => {
-    const { value } = price;
-    const handleChange = (e, v) => setPrice((e) => ({ ...e, value: v }));
-
     return (
       <Box sx={{ minWidth: "90%", p: 2 }}>
         <Box className="slider-container">
@@ -162,7 +160,80 @@ const SM_Filters = ({ open, onClose = () => {} }) => {
           )}
         </div>
         <CustomButton
-          children={<PriceDropdown />}
+          children={
+            <Box sx={{ minWidth: "90%", p: 2 }}>
+              <Box className="slider-container">
+                <Slider
+                  sx={{
+                    color: dark ? "#fff" : "#090B0C",
+                    marginTop: "20px",
+                    "& .MuiSlider-thumb": {
+                      height: 20,
+                      width: 20,
+                      border: dark ? "5px solid #fff" : "5px solid #090B0C",
+                      backgroundColor: dark ? "#090B0C" : "#FFFFFF",
+                    },
+                    "& .MuiSlider-rail": { backgroundColor: "#E5E8EC" },
+                    "& .MuiSlider-valueLabel": { display: "none" },
+                  }}
+                  min={0}
+                  max={10000}
+                  getAriaLabel={() => "Price range"}
+                  value={value}
+                  onChange={handleChange}
+                  valueLabelDisplay="auto"
+                  getAriaValueText={valuetext}
+                />
+                <Box sx={styleSheet.flex}>
+                  <span className="slider-label ">0$</span>
+                  <span className="slider-label ">10 000$</span>
+                </Box>
+                <Box
+                  sx={{
+                    ...styleSheet.flex,
+                    mt: "25px",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <Input
+                    label="From"
+                    value={`${value[0]}$`}
+                    disabled
+                    style={{ width: "100px" }}
+                  />
+                  <Input
+                    label="To"
+                    value={`${value[1]}$`}
+                    disabled
+                    style={{ width: "100px" }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    ...styleSheet.flex,
+                    justifyContent: "flex-start",
+                    paddingRight: "30px",
+                    mt: "25px",
+                  }}
+                >
+                  <Box>
+                    <Button
+                      title="Cancel"
+                      type="secondary"
+                      sx={{ width: "115px" }}
+                    />
+                  </Box>
+                  <Box>
+                    <Button
+                      title="Apply"
+                      type="primary"
+                      sx={{ width: "115px" }}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          }
           dark={dark}
           label="Price per hr : "
           value={"All"}
