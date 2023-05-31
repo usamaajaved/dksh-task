@@ -69,7 +69,7 @@ const Index = () => {
       <div className={matches ? "banners-button-grid" : "banners-button-grid-responsive"}>
         {ButtonArr.map((item, i) => (
           <div
-            style={{ zIndex: "999999" }}
+            style={{ zIndex: "999" }}
             onClick={() => setActive(item)}
             key={i}
             className={
